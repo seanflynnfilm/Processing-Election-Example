@@ -38,6 +38,7 @@ void setup() {
 void draw() {
   // only update if it's has been MILLIS_PER_STATE since the last time we updated
   if (millis() - lastStateMillis >= MILLIS_PER_STATE) {
+  //if (mousePressed){
     // reset everything
     smooth();
     background(0);
@@ -48,14 +49,28 @@ void draw() {
     String currentPostalCode = statePostalCodes[ currentStateIndex ];
     StateData state = data.getState(currentPostalCode);
     text(state.name,WINDOW_SIZE/2,WINDOW_SIZE/4);
+    
     // draw the obama vote count and title
     fill(50,50,250);  // blue
-    text("Obama",WINDOW_SIZE/4,WINDOW_SIZE/2);
-    text(Math.round(state.pctForObama)+"%",WINDOW_SIZE/4,3*WINDOW_SIZE/4);
+    text("Obama",WINDOW_SIZE/4,2*WINDOW_SIZE/5);
+    ellipse(WINDOW_SIZE/4,4*WINDOW_SIZE/5-50,Math.round(state.pctForObama),Math.round(state.pctForObama));
+    fill(#FFFFFF);  // white
+    text(Math.round(state.pctForObama)+"%",WINDOW_SIZE/4,WINDOW_SIZE/2);
+    textFont(font,12);
+    text("Total votes:",WINDOW_SIZE/4,7*WINDOW_SIZE/8);
+    text(Math.round(state.votesForObama),WINDOW_SIZE/4,19*WINDOW_SIZE/20);
+    
     // draw the romney vote count and title
     fill(201,50,50);  // red
-    text("Romney",3*WINDOW_SIZE/4,WINDOW_SIZE/2);
-    text(Math.round(state.pctForRomney)+"%",3*WINDOW_SIZE/4,3*WINDOW_SIZE/4);
+    textFont(font,36);
+    text("Romney",3*WINDOW_SIZE/4,2*WINDOW_SIZE/5);
+    ellipse(3*WINDOW_SIZE/4,4*WINDOW_SIZE/5-50,Math.round(state.pctForRomney),Math.round(state.pctForRomney));
+    fill(#FFFFFF);  // white
+    text(Math.round(state.pctForRomney)+"%",3*WINDOW_SIZE/4,WINDOW_SIZE/2);
+    textFont(font,12);
+    text("Total votes:",3*WINDOW_SIZE/4,7*WINDOW_SIZE/8);
+    text(Math.round(state.votesForRomney),3*WINDOW_SIZE/4,19*WINDOW_SIZE/20);
+    
     // update which state we're showing
     currentStateIndex = (currentStateIndex+1) % statePostalCodes.length;
     // update the last time we drew a state
